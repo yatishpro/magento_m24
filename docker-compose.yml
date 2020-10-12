@@ -9,6 +9,9 @@ services:
     - ./src:/var/www/html
     ports:
     - 80:80
+    depends_on:
+      - php
+      - db
     networks:
       - default
   db:
@@ -24,6 +27,17 @@ services:
       MYSQL_DATABASE: magento
     networks:
       - default
+  php:
+    image: library/php:7.4-fpm-alpine
+    container_name: php
+    volumes:
+    - ./src:/var/www/html
+    - ./deploy/php/php.ini:/usr/local/etc/php/php.ini
+    ports:
+    - 9000:9000
+    networks:
+      - default
+
 
 
 
